@@ -124,7 +124,9 @@ public class WithIdCursorWrapper extends CursorWrapper {
             if (throwException) {
                 return super.getColumnIndexOrThrow(columnName) + 1;
             } else {
-                return super.getColumnIndex(columnName) + 1;
+                // -1 means column not found
+                int i = super.getColumnIndex(columnName);
+                return i >= 0 ? i + 1 : i;
             }
         } else if (mIdPosition == ID_FIRST) {
             // by now, columnName must be _id, added as the first column:
